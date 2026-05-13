@@ -8,7 +8,7 @@ const reviewRoutes: Router = Router();
 reviewRoutes.post(
   "/",
   authenticate as RequestHandler,
-  authorize("STUDENT") as RequestHandler,
+  authorize("MEMBER") as RequestHandler,
   createReview as RequestHandler,
 );
 

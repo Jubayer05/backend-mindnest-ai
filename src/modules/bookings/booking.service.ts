@@ -19,7 +19,7 @@ async function ensureTutorProfileIdForBookingTx(
     where: { id: tutorId },
     select: { id: true, role: true },
   });
-  if (!tutorUser || tutorUser.role !== "TUTOR") {
+  if (!tutorUser || tutorUser.role !== "COACH") {
     throw new Error("Invalid tutor for this slot");
   }
 
@@ -209,7 +209,7 @@ export const createBookingService = async (
     select: { id: true, role: true },
   });
   if (!student) throw new Error("User not found");
-  if (student.role !== "STUDENT") throw new Error("Only students can book slots");
+  if (student.role !== "MEMBER") throw new Error("Only members can book slots");
 
   const slot = await prisma.availabilitySlot.findUnique({
     where: { id: input.availabilitySlotId },
@@ -365,13 +365,13 @@ export const listBookingsService = async (
       : undefined;
 
   const where =
-    user.role === "STUDENT"
+    user.role === "MEMBER"
       ? {
           studentId: userId,
           ...(statusEnum ? { status: statusEnum } : {}),
           ...(dateFilter ? { date: dateFilter } : {}),
         }
-      : user.role === "TUTOR"
+      : user.role === "COACH"
         ? {
             tutorProfile: { userId },
             ...(statusEnum ? { status: statusEnum } : {}),
@@ -468,7 +468,7 @@ export const completeBookingService = async (
     select: { id: true, role: true },
   });
   if (!user) throw new Error("User not found");
-  if (user.role !== "TUTOR") throw new Error("Only tutors can complete bookings");
+  if (user.role !== "COACH") throw new Error("Only coaches can complete bookings");
 
   const existing = await prisma.booking.findUnique({
     where: { id: bookingId },

@@ -81,7 +81,7 @@ function buildListWhere(query: ListTutorsQuery): Prisma.TutorProfileWhereInput {
   const andParts: Prisma.TutorProfileWhereInput[] = [
     {
       user: {
-        role: "TUTOR",
+        role: "COACH",
         isActive: true,
         NOT: { banned: true },
       },
@@ -240,7 +240,7 @@ export async function getTutorPublicDetailService(
     where: {
       userId: tutorUserId,
       user: {
-        role: "TUTOR",
+        role: "COACH",
         isActive: true,
         NOT: { banned: true },
       },

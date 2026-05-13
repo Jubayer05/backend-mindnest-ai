@@ -10,8 +10,8 @@ datasource db {
 
 enum Role {
   ADMIN
-  TUTOR
-  STUDENT
+  COACH
+  MEMBER
 }
 
 enum AvailabilitySlotStatus {
@@ -32,7 +32,7 @@ model User {
   password      String?
   phoneNumber   String?
   bio           String?
-  role          Role      @default(STUDENT)
+  role          Role      @default(MEMBER)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

@@ -65,7 +65,7 @@ export function forwardSetCookie(
   }
 }
 
-const SKILLBRIDGE_USER_COOKIE = "skillbridge-user";
+const MINDNEST_USER_COOKIE = "mindnest-user";
 const SESSION_FALLBACK_MS = 7 * 24 * 60 * 60 * 1000;
 
 function getSetCookieValues(
@@ -88,7 +88,7 @@ function getSetCookieValues(
 function sessionEndFromSetCookie(headers: globalThis.Headers | undefined): Date | null {
   const setCookies = getSetCookieValues(headers);
   const sessionCookie = setCookies.find((cookie) =>
-    cookie.startsWith("skillbridge.session_token="),
+    cookie.startsWith("mindnest.session_token="),
   );
 
   if (!sessionCookie) return null;
@@ -140,7 +140,7 @@ function sessionEndFromLoginBody(body: unknown): Date | null {
 }
 
 /** Mirrors the frontend middleware cookie: `{ user, sessionExpiresAt }` with Max-Age in ms (Express), aligned with Better Auth session. */
-export function setSkillbridgeUserCookie(
+export function setMindnestUserCookie(
   res: ExpressResponse,
   loginResponseBody: unknown,
   headers?: globalThis.Headers,
@@ -166,7 +166,7 @@ export function setSkillbridgeUserCookie(
 
   const secure = process.env.NODE_ENV === "production";
 
-  res.cookie(SKILLBRIDGE_USER_COOKIE, JSON.stringify(payload), {
+  res.cookie(MINDNEST_USER_COOKIE, JSON.stringify(payload), {
     path: "/",
     maxAge: maxAgeMs,
     httpOnly: false,
@@ -175,9 +175,9 @@ export function setSkillbridgeUserCookie(
   });
 }
 
-export function clearSkillbridgeUserCookie(res: ExpressResponse): void {
+export function clearMindnestUserCookie(res: ExpressResponse): void {
   const secure = process.env.NODE_ENV === "production";
-  res.clearCookie(SKILLBRIDGE_USER_COOKIE, {
+  res.clearCookie(MINDNEST_USER_COOKIE, {
     path: "/",
     sameSite: "lax",
     secure,

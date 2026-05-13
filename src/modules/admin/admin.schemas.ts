@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const roleEnum = z.enum(["ADMIN", "TUTOR", "STUDENT"]);
+const roleEnum = z.enum(["ADMIN", "COACH", "MEMBER"]);
 
 export const listAdminUsersQuerySchema = z.object({
   role: roleEnum.optional(),

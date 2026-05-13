@@ -15,7 +15,7 @@ const subjectRoutes: Router = ExpressRouter();
 
 const adminOrTutor: RequestHandler[] = [
   authenticate as RequestHandler,
-  authorize("ADMIN", "TUTOR") as RequestHandler,
+  authorize("ADMIN", "COACH") as RequestHandler,
 ];
 
 const adminOnly: RequestHandler[] = [
@@ -29,6 +29,10 @@ subjectRoutes.post("/", ...adminOrTutor, createSubject as RequestHandler);
 
 subjectRoutes.get(
   "/:subjectId/tutors",
+  getTutorsBySubject as RequestHandler,
+);
+subjectRoutes.get(
+  "/:subjectId/coaches",
   getTutorsBySubject as RequestHandler,
 );
 

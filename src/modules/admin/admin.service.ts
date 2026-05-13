@@ -267,16 +267,16 @@ export async function getAdminStatsService(): Promise<{
 }> {
   const [
     adminCount,
-    tutorCount,
-    studentCount,
+    coachCount,
+    memberCount,
     totalBookings,
     revenueSum,
     recentUsers,
     recentBookings,
   ] = await prisma.$transaction([
     prisma.user.count({ where: { role: "ADMIN" } }),
-    prisma.user.count({ where: { role: "TUTOR" } }),
-    prisma.user.count({ where: { role: "STUDENT" } }),
+    prisma.user.count({ where: { role: "COACH" } }),
+    prisma.user.count({ where: { role: "MEMBER" } }),
     prisma.booking.count(),
     prisma.booking.aggregate({
       where: { status: "COMPLETED" },
@@ -305,8 +305,8 @@ export async function getAdminStatsService(): Promise<{
 
   const usersByRole: { role: Role; count: number }[] = [
     { role: "ADMIN", count: adminCount },
-    { role: "TUTOR", count: tutorCount },
-    { role: "STUDENT", count: studentCount },
+    { role: "COACH", count: coachCount },
+    { role: "MEMBER", count: memberCount },
   ];
 
   const totalRevenue = revenueSum._sum.totalPrice?.toString() ?? "0";

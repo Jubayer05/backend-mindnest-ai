@@ -17,7 +17,7 @@ tutorRoutes.get("/featured", listFeaturedTutors as RequestHandler);
 tutorRoutes.put(
   "/profile",
   authenticate as RequestHandler,
-  authorize("TUTOR") as RequestHandler,
+  authorize("COACH") as RequestHandler,
   upsertTutorProfile as RequestHandler,
 );
 
@@ -25,7 +25,7 @@ tutorRoutes.put(
 tutorRoutes.get(
   "/reviews",
   authenticate as RequestHandler,
-  authorize("TUTOR") as RequestHandler,
+  authorize("COACH") as RequestHandler,
   listMyTutorReviews as RequestHandler,
 );
 

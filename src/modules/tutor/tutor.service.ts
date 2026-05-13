@@ -50,7 +50,7 @@ export const upsertTutorProfileService = async (
     throw new Error("User not found");
   }
 
-  if (user.role !== "TUTOR") {
+  if (user.role !== "COACH") {
     throw new Error("Only tutors can create or update tutor profiles");
   }
 
@@ -97,7 +97,7 @@ function toSyntheticFeaturedTutor(row: {
   return {
     id: `synthetic-profile-${row.userId}`,
     userId: row.userId,
-    headline: "Tutor",
+    headline: "Coach",
     bio: "Available for tutoring sessions.",
     hourlyRate: "0.00",
     rating: null,
@@ -179,7 +179,7 @@ export const listFeaturedTutorsService = async (
   }
 
   const users = await prisma.user.findMany({
-    where: { id: { in: [...missingByUserId.keys()] }, role: "TUTOR" },
+    where: { id: { in: [...missingByUserId.keys()] }, role: "COACH" },
     select: { id: true, name: true, image: true },
   });
 

@@ -13,7 +13,7 @@ const router = Router();
 router.post(
   "/init",
   authenticate as RequestHandler,
-  authorize("STUDENT") as RequestHandler,
+  authorize("MEMBER") as RequestHandler,
   initSslcommerzPayment as RequestHandler,
 );
 

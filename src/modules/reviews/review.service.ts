@@ -94,7 +94,7 @@ export const createReviewService = async (
     select: { id: true, role: true },
   });
   if (!user) throw new Error("User not found");
-  if (user.role !== "STUDENT") throw new Error("Only students can submit reviews");
+  if (user.role !== "MEMBER") throw new Error("Only members can submit reviews");
 
   const comment =
     input.comment !== undefined && input.comment.trim() !== ""
@@ -223,7 +223,7 @@ export const listReviewsForLoggedInTutorDashboardService = async (
     where: { id: tutorUserId },
     select: { id: true, role: true },
   });
-  if (!tutor || tutor.role !== "TUTOR") {
+  if (!tutor || tutor.role !== "COACH") {
     throw new Error("Only tutors can view their reviews");
   }
 

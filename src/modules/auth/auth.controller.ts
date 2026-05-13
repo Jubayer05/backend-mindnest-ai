@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import { authClient } from "../../lib/auth.js";
 import { prisma } from "../../lib/prisma.js";
 import {
-  clearSkillbridgeUserCookie,
+  clearMindnestUserCookie,
   forgotPasswordService,
   forwardSetCookie,
   getHeadersAsWebHeaders,
@@ -10,7 +10,7 @@ import {
   logoutService,
   registerService,
   resetPasswordService,
-  setSkillbridgeUserCookie,
+  setMindnestUserCookie,
   updatePasswordService,
   verifyEmailService,
 } from "./auth.service.js";
@@ -45,9 +45,9 @@ export const register = async (req: Request, res: Response) => {
       return;
     }
 
-    const allowedRoles = new Set(["ADMIN", "STUDENT", "TUTOR"]);
+    const allowedRoles = new Set(["ADMIN", "MEMBER", "COACH"]);
     const upper = typeof role === "string" ? role.trim().toUpperCase() : "";
-    const normalizedRole = allowedRoles.has(upper) ? upper : "STUDENT";
+    const normalizedRole = allowedRoles.has(upper) ? upper : "MEMBER";
 
     const result = await registerService(
       {
@@ -90,7 +90,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const result = await loginService(req.body, getHeadersAsWebHeaders(req));
     forwardSetCookie(res, result.headers);
-    setSkillbridgeUserCookie(res, result.response, result.headers);
+    setMindnestUserCookie(res, result.response, result.headers);
     res
       .status(200)
       .json({ message: "Login successful", data: result.response });
@@ -244,7 +244,7 @@ export const logout = async (req: Request, res: Response) => {
   try {
     const result = await logoutService(getHeadersAsWebHeaders(req));
     forwardSetCookie(res, result.headers);
-    clearSkillbridgeUserCookie(res);
+    clearMindnestUserCookie(res);
     res
       .status(200)
       .json({ message: "Logged out successfully", data: result.response });

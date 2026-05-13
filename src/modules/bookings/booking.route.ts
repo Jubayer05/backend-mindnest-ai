@@ -15,7 +15,7 @@ const bookingRoutes: Router = Router();
 bookingRoutes.post(
   "/",
   authenticate as RequestHandler,
-  authorize("STUDENT") as RequestHandler,
+  authorize("MEMBER") as RequestHandler,
   createBooking as RequestHandler,
 );
 
@@ -40,7 +40,7 @@ bookingRoutes.patch(
 bookingRoutes.patch(
   "/:id/complete",
   authenticate as RequestHandler,
-  authorize("TUTOR") as RequestHandler,
+  authorize("COACH") as RequestHandler,
   completeBooking as RequestHandler,
 );
 

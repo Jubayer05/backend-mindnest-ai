@@ -13,6 +13,7 @@ import uploadRouter from "../modules/upload/upload.route.js";
 import userRoutes from "../modules/user/user.route.js";
 import bookingRoutes from "../modules/bookings/booking.route.js";
 import sslcommerzRoutes from "../modules/payments/sslcommerz/sslcommerz.route.js";
+import aiRoutes from "../modules/ai/ai.route.js";
 
 const router: Router = Router();
 
@@ -24,11 +25,14 @@ router.use("/bookings", bookingRoutes);
 router.use("/payments/sslcommerz", sslcommerzRoutes);
 router.use("/profile", profileRoutes);
 router.use("/tutor", tutorRoutes);
+router.use("/coach", tutorRoutes);
 router.use("/tutors", tutorsRoutes);
+router.use("/coaches", tutorsRoutes);
 router.use("/reviews", reviewRoutes);
 router.use("/admin", adminRoutes);
 router.use("/admin/reviews", adminReviewRoutes);
 router.use("/users", userRoutes);
 router.use("/upload", uploadRouter);
+router.use("/ai", aiRoutes);
 
 export default router;

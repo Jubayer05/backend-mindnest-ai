@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const FROM =
-  process.env.SMTP_FROM ?? process.env.SMTP_USER ?? "noreply@skillbridge.com";
+  process.env.SMTP_FROM ?? process.env.SMTP_USER ?? "noreply@mindnest.ai";
 
 function escapeHtml(input: string): string {
   return input
@@ -61,7 +61,7 @@ function buildEmailLayout(params: {
             <tr>
               <td style="padding:0 4px 14px 4px;">
                 <div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111827;font-weight:800;font-size:18px;letter-spacing:0.2px;">
-                  SkillBridge
+                  MindNest AI
                 </div>
                 <div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#6b7280;font-size:12px;margin-top:4px;">
                   Learn • Build • Grow
@@ -116,7 +116,7 @@ function buildEmailLayout(params: {
             <tr>
               <td align="center" style="padding:14px 6px 0 6px;">
                 <div style="font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#9ca3af;font-size:11px;line-height:1.4;">
-                  © ${new Date().getFullYear()} SkillBridge. All rights reserved.
+                  © ${new Date().getFullYear()} MindNest AI. All rights reserved.
                 </div>
               </td>
             </tr>
@@ -150,22 +150,22 @@ export async function sendVerificationEmail(
 
   const { html, text } = buildEmailLayout({
     title: "Verify your email",
-    preheader: "Confirm your email address to activate your SkillBridge account.",
+    preheader: "Confirm your email address to activate your MindNest AI account.",
     greetingName: displayName,
     bodyHtml:
-      'Thanks for signing up for <strong>SkillBridge</strong>. Please confirm your email address to activate your account and start learning.',
+      'Thanks for signing up for <strong>MindNest AI</strong>. Please confirm your email address to activate your account and start learning.',
     ctaLabel: "Verify Email",
     ctaUrl: url,
     footerNote:
       "If you didn’t create an account, you can safely ignore this email. This link expires in 24 hours.",
     fallbackText:
-      "Thanks for signing up for SkillBridge. Please verify your email address to activate your account. This link expires in 24 hours.",
+      "Thanks for signing up for MindNest AI. Please verify your email address to activate your account. This link expires in 24 hours.",
   });
 
   await transporter.sendMail({
     from: FROM,
     to: email,
-    subject: "Verify your SkillBridge email address",
+    subject: "Verify your MindNest AI email address",
     html,
     text,
   });
@@ -180,7 +180,7 @@ export async function sendResetPasswordEmail(
 
   const { html, text } = buildEmailLayout({
     title: "Reset your password",
-    preheader: "Use this secure link to reset your SkillBridge password.",
+    preheader: "Use this secure link to reset your MindNest AI password.",
     greetingName: displayName,
     bodyHtml:
       "We received a request to reset your password. Use the button below to choose a new password.",
@@ -195,7 +195,7 @@ export async function sendResetPasswordEmail(
   await transporter.sendMail({
     from: FROM,
     to: email,
-    subject: "Reset your SkillBridge password",
+    subject: "Reset your MindNest AI password",
     html,
     text,
   });

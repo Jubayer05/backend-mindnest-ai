@@ -264,7 +264,7 @@ export const createAvailabilitySlotService = async (
     throw new Error("User not found");
   }
 
-  if (user.role !== "TUTOR") {
+  if (user.role !== "COACH") {
     throw new Error("Only tutors can create availability slots");
   }
 

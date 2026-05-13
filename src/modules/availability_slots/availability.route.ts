@@ -15,7 +15,7 @@ const availabilityRoutes: Router = ExpressRouter();
 
 const tutorOnly: RequestHandler[] = [
   authenticate as RequestHandler,
-  authorize("TUTOR") as RequestHandler,
+  authorize("COACH") as RequestHandler,
 ];
 
 // GET /availability/slots?tutorId=&date=

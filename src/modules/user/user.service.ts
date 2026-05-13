@@ -56,7 +56,7 @@ export const removeUserService = (
   });
 
 // Better Auth's admin setRole only accepts its built-in "user"|"admin" roles.
-// Our app uses custom roles (STUDENT, TUTOR, ADMIN) stored as an additionalField,
+// Our app uses custom roles (MEMBER, COACH, ADMIN) stored as an additionalField,
 // so we update the role field via updateUser instead.
 export const setUserRoleService = (
   userId: string,

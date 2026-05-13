@@ -29,10 +29,39 @@ const allowSignupRoleField: BetterAuthPlugin = {
   },
 };
 
+const googleCreds =
+  process.env.GOOGLE_CLIENT_ID?.trim() &&
+  process.env.GOOGLE_CLIENT_SECRET?.trim()
+    ? {
+        google: {
+          clientId: process.env.GOOGLE_CLIENT_ID.trim(),
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET.trim(),
+        },
+      }
+    : {};
+
+const facebookCreds =
+  process.env.FACEBOOK_CLIENT_ID?.trim() &&
+  process.env.FACEBOOK_CLIENT_SECRET?.trim()
+    ? {
+        facebook: {
+          clientId: process.env.FACEBOOK_CLIENT_ID.trim(),
+          clientSecret: process.env.FACEBOOK_CLIENT_SECRET.trim(),
+        },
+      }
+    : {};
+
+const socialProviders =
+  Object.keys(googleCreds).length > 0 || Object.keys(facebookCreds).length > 0
+    ? { ...googleCreds, ...facebookCreds }
+    : undefined;
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+
+  ...(socialProviders ? { socialProviders } : {}),
 
   trustedOrigins: [
     (process.env.FRONTEND_URL ?? "http://localhost:3000").replace(/\/$/, ""),
@@ -97,7 +126,7 @@ export const auth = betterAuth({
     additionalFields: {
       role: {
         type: "string" as const,
-        defaultValue: "STUDENT",
+        defaultValue: "MEMBER",
         input: true,
         output: true,
       },
@@ -105,7 +134,7 @@ export const auth = betterAuth({
   },
 
   advanced: {
-    cookiePrefix: "skillbridge",
+    cookiePrefix: "mindnest",
     defaultCookieAttributes: {
       sameSite: "none" as const,
       secure: true,
@@ -120,14 +149,14 @@ export const auth = betterAuth({
   plugins: [
     admin({
       // Permission lookup is acRoles[session.user.role] (case-sensitive).
-      // defaultRoles only has "admin" and "user"; our DB uses ADMIN/STUDENT/TUTOR.
-      defaultRole: "STUDENT",
+      // defaultRoles only has "admin" and "user"; our DB uses ADMIN/MEMBER/COACH.
+      defaultRole: "MEMBER",
       adminRoles: ["admin", "ADMIN"],
       roles: {
         ...defaultRoles,
         ADMIN: adminAc,
-        STUDENT: userAc,
-        TUTOR: userAc,
+        MEMBER: userAc,
+        COACH: userAc,
       },
     }),
     allowSignupRoleField,

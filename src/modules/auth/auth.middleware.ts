@@ -72,7 +72,7 @@ export const authenticate = async (
     req.user = {
       id: session.user.id,
       email: session.user.email,
-      role: (session.user as { role?: string }).role ?? "STUDENT",
+      role: (session.user as { role?: string }).role ?? "MEMBER",
     };
 
     req.session = {
@@ -90,6 +90,35 @@ export const authenticate = async (
 };
 
 // ─── Authorization middleware ─────────────────────────────────────────────────
+
+/** Attaches `req.user` when a valid session exists; never returns 401 (for optional AI/personalization). */
+export const tryAuthenticate = async (
+  req: ExpressRequest,
+  _res: ExpressResponse,
+  next: ExpressNextFunction,
+): Promise<void> => {
+  try {
+    const session = await authClient.api.getSession({
+      headers: buildWebHeaders(req),
+      query: { disableCookieCache: true },
+    });
+
+    if (session?.session && session?.user) {
+      req.user = {
+        id: session.user.id,
+        email: session.user.email,
+        role: (session.user as { role?: string }).role ?? "MEMBER",
+      };
+      req.session = {
+        id: session.session.id,
+        userId: session.session.userId,
+      };
+    }
+  } catch {
+    /* ignore */
+  }
+  next();
+};
 
 export const authorize = (...allowedRoles: string[]) => {
   return (

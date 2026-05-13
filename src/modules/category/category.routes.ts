@@ -15,7 +15,7 @@ const categoryRoutes: Router = ExpressRouter();
 
 const adminOrTutor: RequestHandler[] = [
   authenticate as RequestHandler,
-  authorize("ADMIN", "TUTOR") as RequestHandler,
+  authorize("ADMIN", "COACH") as RequestHandler,
 ];
 
 const adminOnly: RequestHandler[] = [
@@ -29,6 +29,10 @@ categoryRoutes.post("/", ...adminOrTutor, createCategory as RequestHandler);
 
 categoryRoutes.get(
   "/:categoryId/tutors",
+  getTutorsByCategory as RequestHandler,
+);
+categoryRoutes.get(
+  "/:categoryId/coaches",
   getTutorsByCategory as RequestHandler,
 );
 
