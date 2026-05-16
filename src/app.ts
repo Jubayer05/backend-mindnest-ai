@@ -44,6 +44,13 @@ app.all("/api/auth/*splat", toNodeHandler(authClient));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    service: "MindNest API",
+    health: "/api/v1/health",
+  });
+});
+
 // Routes
 
 app.use("/api/v1", router);
